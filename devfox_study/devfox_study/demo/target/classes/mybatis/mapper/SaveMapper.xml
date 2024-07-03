@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.SaveMapper">
+
+    <!-- 게시글 입력하는 인서트 쿼리 -->
+    <insert id="SaveBoard" parameterType="com.example.demo.vo.Save">
+        insert into posts (username, title, content)
+        values (#{username}, #{title}, #{content});
+    </insert>
+    <!-- 페이지 기능과 리스트 기능을 합친 셀렉트 쿼리 -->
+<select id="getListWithpage" parameterType="page.Criteria" resultType="com.example.demo.vo.Save">
+    <![CDATA[
+    select post_id, title, username, created_at, updated_at
+    from posts
+    ]]>
+    <include refid="criteria"/>
+    <![CDATA[
+    order by post_id desc
+    ]]>
+    <if test="pageNum != null and amount != null">
+        <![CDATA[
+        limit #{startRow}, #{amount};
+        ]]>
+    </if>
+</select> 
+<select id="getComments" resultType="com.example.demo.vo.Comment">
+    	select comment_username , created_at, comment_content from comments where post_id =#{post_id};
+</select>
+<insert id="addComment">
+        insert into comments ( post_id, comment_username, comment_content)
+        values ( #{post_id}, #{username}, #{comment_content})
+    </insert>
+<!-- 게시글의 총량을 찾는sql문 -->
+<select id="getTotalCount" parameterType="page.Criteria" resultType="java.lang.Integer">
+    <![CDATA[
+    SELECT COUNT(*) FROM posts
+    ]]>
+    <include refid="criteria"/>
+</select>
+
+    <!-- 검색된 게시글 목록 조회 -->
+    <select id="searchBoard" parameterType="page.Criteria" resultType="com.example.demo.vo.Save">
+        <![CDATA[
+        SELECT post_id, title, username, created_at, updated_at
+        FROM posts
+        WHERE 1=1
+        ]]>
+        <trim prefix="AND" prefixOverrides="AND |OR ">
+            <choose>
+                <when test="type == 1">
+                    <![CDATA[
+                    title LIKE CONCAT('%', #{keyword}, '%')
+                    ]]>
+                </when>
+                <when test="type == 2">
+                    <![CDATA[
+                    username LIKE CONCAT('%', #{keyword}, '%')
+                    ]]>
+                </when>
+                <when test="type == 3">
+                    <![CDATA[
+                    content LIKE CONCAT('%', #{keyword}, '%')
+                    ]]>
+                </when>
+            </choose>
+        </trim>
+        <![CDATA[
+        ORDER BY post_id DESC
+        LIMIT #{startRow}, #{amount}
+        ]]>
+    </select>
+
+    <!-- 검색 결과의 총 개수를 조회하는 SQL 쿼리 -->
+    <select id="totalSearchCount" parameterType="page.Criteria" resultType="java.lang.Integer">
+        <![CDATA[
+        SELECT COUNT(*) FROM posts
+        WHERE 1=1
+        ]]>
+        <trim prefix="AND" prefixOverrides="AND |OR ">
+            <choose>
+                <when test="type == 1">
+                    <![CDATA[
+                    title LIKE CONCAT('%', #{keyword}, '%')
+                    ]]>
+                </when>
+                <when test="type == 2">
+                    <![CDATA[
+                    username LIKE CONCAT('%', #{keyword}, '%')
+                    ]]>
+                </when>
+                <when test="type == 3">
+                    <![CDATA[
+                    content LIKE CONCAT('%', #{keyword}, '%')
+                    ]]>
+                </when>
+            </choose>
+        </trim>
+    </select>
+	<!-- 게시글을 클릭했을때 제목 내용등을 보이게 해주는 sql문 -->
+	<select id="selectDetail" resultType="com.example.demo.vo.Save">
+	select * from posts where post_id = #{post_id};
+	
+	</select>
+	<update id="modify" parameterType="com.example.demo.vo.Save">
+	update posts set title = #{title}, content = #{content} where post_id = #{post_id};
+	</update>
+	<update id="updateComment" parameterType="com.example.demo.vo.Comment">
+	  update comments set comment_content = #{comment_content} where comment_id = #{comment_id};
+	
+	</update>
+	<delete id="delete" parameterType="com.example.demo.vo.Save">
+	delete from posts where post_id = #{postId} 
+	</delete>
+    <!-- Criteria 조건 SQL 조각 -->
+    <sql id="criteria">
+        <if test="keyword != null and keyword != ''">
+            WHERE title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    </sql>
+
+
+</mapper>
