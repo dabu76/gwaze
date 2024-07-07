@@ -27,14 +27,16 @@ public class LoginController {
 		
 		return "/login";
 	}
-	//로그인 jsp에서 아이디 비밀번호를 리퀘스트 파람으로 받아서 유저디테일스라는 시큐리티 인터페이스에 담아서 
-	// login.jsp에서 아디이와 비밀번호를 리퀘스트파람으로 받아서, detailService의 loadUserByUsername이라는 
-	// 함수를 호출
-	@PostMapping("/login")
+	//ログインjspでIDパスワードをリクエストパラムで受け取り、ユーザーディテールズというセキュリティインターフェースに入れて
+	// login.jspでアディイとパスワードをリクエストしてもらい、detailServiceのloadUserByUsernameという
+	// 関数を呼び出す
+	@PostMapping("/login") // @Request Param ではこれは要請されたパラメータ値を定義してusernameとpasswordを送ってくれる
 	public String procLogin(@RequestParam String username, @RequestParam String password) {
+		//User Details ServiceはSpring Securityでユーザー認証に使用情報をロードするインターフェースで、
+		//それをディテールサービスにあるID検索するマッパーを通じてIDを検索してくれる
 		UserDetails userDetails = detailService.loadUserByUsername(username);
-		//테이블 안에 있는 유저 정보와 내가 입력한 유저정보가 일치할 경우 인덱스 페이지로 리다이렉트 한다
-		//만약 일치하지 않다면 문법상 널을 반환해준다(string 로 받았으므로 반드시 반환해줘야하므로)
+		//テーブルの中にあるユーザー情報と自分が入力したユーザー情報が一致した場合、インデックスページにリダイレクトする
+		//もし一致しないなら文法上あなたを返してくれる（stringでもらったので必ず返してくれなければならないので）
 		if (userDetails != null && detailService.checkPassword(userDetails, password)) {
 			return "redirect:/";
 		} else {
@@ -50,7 +52,7 @@ public class LoginController {
 	//会員登録に情報を入力した時にIDとパスワードの情報を受け取りログインサービスに送る
 	@PostMapping("/join")
 	public String procJoin(User user) {
-		
+		//ログインサービスにあるjoinメソッドを実行した後にloginページに戻らせる
 		loginservice.join(user);
 		
 		return "redirect:/login";

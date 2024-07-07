@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.SaveMapper">
+
+    <!-- 掲示文を入力するインサートクエリー -->
+    <insert id="SaveBoard" parameterType="com.example.demo.vo.Save">
+        insert into posts (username, title, content)
+        values (#{username}, #{title}, #{content});
+    </insert>
+    <!-- ページ機能とリスト機能を合わせたセレクトクエリ -->
+<select id="getListWithpage" parameterType="page.Criteria" resultType="com.example.demo.vo.Save">
+    <![CDATA[
+    select post_id, title, username, created_at, updated_at
+    from posts
+    ]]>
+    <!-- 下にあるcriteriaの条件を持ってきて再び使うが、ここで条件などを確認する時に使われる-->
+    <include refid="criteria"/>
+    <![CDATA[
+    order by post_id desc
+    ]]>
+    <if test="pageNum != null and amount != null">
+        <![CDATA[
+        limit #{startRow}, #{amount};
+        ]]>
+    </if>
+</select> 
+<!--post_idに合うコメントを検索-->
+<select id="getComments" resultType="com.example.demo.vo.Comment">
+    	select post_id,comment_id,comment_username , created_at, comment_content from comments where post_id =#{post_id};
+</select>
+<!-- コメント入力クエリ-->
+<insert id="addComment">
+        insert into comments ( post_id, comment_username, comment_content)
+        values ( #{post_id}, #{username}, #{comment_content})
+    </insert>
+<!-- 掲示文の総量を探すsql文 -->
+<select id="getTotalCount" parameterType="page.Criteria" resultType="java.lang.Integer">
+    <![CDATA[
+    SELECT COUNT(*) FROM posts
+    ]]>
+    <include refid="criteria"/>
+</select>
+
+   	<!-- 検索された投稿リストを照会するsql-->
+    <select id="searchBoard" parameterType="page.Criteria" resultType="com.example.demo.vo.Save">
+        <![CDATA[
+        SELECT post_id, title, username, created_at, updated_at
+        FROM posts
+        WHERE 1=1
+        ]]>
+        <trim prefix="AND" prefixOverrides="AND |OR ">
+            <choose>
+                <when test="type == 1">
+                    <![CDATA[
+                    title LIKE CONCAT('%', #{keyword}, '%')
+                    ]]>
+                </when>
+                <when test="type == 2">
+                    <![CDATA[
+                    username LIKE CONCAT('%', #{keyword}, '%')
+                    ]]>
+                </when>
+                <when test="type == 3">
+                    <![CDATA[
+                    content LIKE CONCAT('%', #{keyword}, '%')
+                    ]]>
+                </when>
+            </choose>
+        </trim>
+        <![CDATA[
+        ORDER BY post_id DESC
+        LIMIT #{startRow}, #{amount}
+        ]]>
+    </select>
+
+  	 <!-- 検索結果の合計数を照会するSQLクエリ -->
+    <select id="totalSearchCount" parameterType="page.Criteria" resultType="java.lang.Integer">
+        <![CDATA[
+        SELECT COUNT(*) FROM posts
+        WHERE 1=1
+        ]]>
+        <trim prefix="AND" prefixOverrides="AND |OR ">
+            <choose>
+                <when test="type == 1">
+                    <![CDATA[
+                    title LIKE CONCAT('%', #{keyword}, '%')
+                    ]]>
+                </when>
+                <when test="type == 2">
+                    <![CDATA[
+                    username LIKE CONCAT('%', #{keyword}, '%')
+                    ]]>
+                </when>
+                <when test="type == 3">
+                    <![CDATA[
+                    content LIKE CONCAT('%', #{keyword}, '%')
+                    ]]>
+                </when>
+            </choose>
+        </trim>
+    </select>
+	<!-- 掲示文をクリックした時、タイトル内容などが見えるようにしてくれるsql文 -->
+	<select id="selectDetail" resultType="com.example.demo.vo.Save">
+	select * from posts where post_id = #{post_id};
+	
+	</select>
+	<!--文を修正する時に使われるsql文-->
+	<update id="modify" parameterType="com.example.demo.vo.Save">
+	update posts set title = #{title}, content = #{content} where post_id = #{post_id};
+	</update>
+	<!-- コメントを修正する時に使われるsql文-->
+	<update id="updateComment" parameterType="com.example.demo.vo.Comment">
+	  update comments set comment_content = #{comment_content} where comment_id = #{comment_id};
+	
+	</update>
+	<!--文を削除する時に使われるsql文-->
+	<delete id="delete" parameterType="com.example.demo.vo.Save">
+	delete from posts where post_id = #{postId} 
+	</delete>
+	<!-- コメントを削除する時に使われるsql文-->
+	<delete id="deleteComment" parameterType="com.example.demo.vo.Comment">
+	delete from comments where comment_id = #{comment_id} 
+	</delete>
+   	<!-- Criteria 条件 SQL ピース -->
+    <sql id="criteria">
+        <if test="keyword != null and keyword != ''">
+            WHERE title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    </sql>
+</mapper>

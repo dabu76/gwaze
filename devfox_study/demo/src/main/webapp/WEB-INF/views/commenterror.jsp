@@ -3,18 +3,19 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ include file="header.jsp"%>
+
 <!DOCTYPE html>
 <html>
-
+<!-- ログインをせずにコメントを書こうとした時に出てくるエラー-->
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-<!-- ログインする時にパスワードやIDを間違えた時に来るページ -->
 <sec:authorize access="!isAuthenticated()">
     <script>
-        alert("비밀번호 혹은 아이디가 틀렸습니다");
+        alert("로그인후 이용이 가능합니다");
         location.href="/login";
     </script>
 </sec:authorize>

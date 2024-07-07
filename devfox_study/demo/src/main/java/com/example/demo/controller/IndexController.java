@@ -6,20 +6,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class IndexController {
-	// 인덱스 화면
+	// インデックス画面
 	@GetMapping("/")
 	public String index () {
 		return "/index";
 	}
-	//로그인 에러시 화면
+	// ログインエラー時の画面
 	@GetMapping("/errorPage")
 	public String error() {
 		return "/error";
 	}
-	
+	// テスト時に使ったページ
 	@ResponseBody
 	@GetMapping("/test")
 	public String test() {
-		return "testtestest";
+		// /testページにアクセスすると
+		return "testtestest";  // この文字が出力される
 	}
 }
