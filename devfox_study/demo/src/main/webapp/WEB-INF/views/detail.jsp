@@ -96,8 +96,9 @@ function check() {
         <c:forEach var="comment" items="${commentList}">
             <div class="comment">
                 <p>아이디: ${comment.comment_username} | 날짜: ${comment.created_at}</p>
+                <p>댓글내용</p>
                 <p id="commentContent_${comment.comment_id}" data-original="${comment.comment_content}">
-                    ${comment.comment_content}
+                 ${comment.comment_content}
                 </p>
                 
                 <!-- コメントを修正や削除する時に一旦ログインされているか確認し、その後ログインしたユーザーネームとコメントを書いたユーザーネームが同じか確認して

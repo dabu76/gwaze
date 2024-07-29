@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,6 @@ public class LoginController {
 	//シングルターンパターンを利用して接続するために、箱と依存性を注入して使用しなければならないため、privateとfinalを使用して再定義する
 	private final LoginService loginservice;
 	private final MyUserDetailsService detailService;
-	
 	//ログイン画面
 	@GetMapping("/login")
 	public String login() {
@@ -52,11 +52,24 @@ public class LoginController {
 	//会員登録に情報を入力した時にIDとパスワードの情報を受け取りログインサービスに送る
 	@PostMapping("/join")
 	public String procJoin(User user) {
-		//ログインサービスにあるjoinメソッドを実行した後にloginページに戻らせる
+		// 受信したユーザー値を比較してできるように変数を作り
+		 User ruser  =  loginservice.findUser(user);
+		//もし受け取ったユーザー値がない場合はエラーページへ移動
+		if(ruser != null) {
+
+			return "/joinerror";
+		}else {
+			//ログインサービスにあるjoinメソッドを実行した後にloginページに戻らせる
 		loginservice.join(user);
-		
 		return "redirect:/login";
 
+		}
+	
+
+	}
+	@GetMapping("/joinerror")
+	public String jounErrir() {
+		return "/joinerror";
 	}
 
 }

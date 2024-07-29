@@ -10,8 +10,6 @@ public class PageVo {
 
     private int startPage; // 開始ページ番号
     private int endPage; // 最後のページ番号
-    private boolean prev; // 前のページかどうか
-    private boolean next; // 次ページかどうか
     private int total; // 全項目数
     private Criteria cri; // 検索条件オブジェクト
     //1ページに入る量と(例1~10)と総掲示文(1~100)の量を入れて計算してくれるメソッド
@@ -27,12 +25,6 @@ public class PageVo {
 
         // 開始ページの計算
         this.startPage = Math.max(1, this.endPage - 9);
-
-        // 前のページかどうかの計算
-        this.prev = this.startPage > 1;
-
-        // 次ページかどうかの計算
-        this.next = this.endPage < realEnd;
     }
     
 }
