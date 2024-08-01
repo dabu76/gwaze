@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <table border = "1">
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td> 
+            </tr>
+        </table>
+        <script>
+        document.querySelector('td').addEventListener('click',()=>{
+            console.log('td를 클릭')
+        });
+        document.querySelector('tr').addEventListener('click',()=>{
+            console.log('tr을 클릭했습니다');
+        });
+        document.querySelector('table').addEventListener('click',()=>{
+            console.log('table을 클릭했습니다');
+        })
+        </script>
+    </body>
+   
+</html>

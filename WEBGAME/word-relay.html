@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>끝말잇기</title>
+    </head>
+    <body>
+        <div><span id="order">1</span>번째 참가자</div>
+        <div>제시어 : <span id = "word"></span></div>
+            <input type="text">
+            <button>입력</button>
+        <script>
+           let startCoord;
+           window.addEventListener('mousedown',(event)=>{
+            startCoord = [event.clientX, event.clientY];
+           });
+           window.addEventListener('mouseup',(event) =>{
+            const endCoord = [event.clientX,event.clientY];
+            const diffX = endCoord[0] - startCoord[0];
+            const diffY = endCoord[1] - startCoord[1];
+            const isUnder45 = Math.abs(diffX) > Math.abs(diffy);
+            if(diffX < 0 && isUnder45){
+                console.log('왼쪽');
+            }else if(diffX > 0 && !isUnder45){
+                console.log('오른쪽');
+            }else if(diffY > 0 && !isUnder45){
+                console.log('아래쪽');
+            }else if(diffY < 0 && !isUnder45){
+                console.log('위쪽');
+            }
+        
+           });
+        </script>
+    </body>
+</html>
