@@ -1,7 +1,7 @@
 <?php
     $id   = $_POST["id"];
     $pass = $_POST["pass"];
-
+    $hashed_password = password_hash($pass,PASSWORD_DEFAULT);
     include "../include/connect.php";
     $sql = "select * from _mem where id='$id'";
     $result = mysqli_query($con, $sql);
@@ -11,7 +11,7 @@
     if(!$num_match) {
       echo "<script>
              window.alert('등록되지 않는 아이디입니다!')
-             location.href = 'login.php'
+             location.href = 'selecttype.php?type=login_form';
            </script>";
     }
     else {
@@ -20,10 +20,10 @@
 
         mysqli_close($con);
 
-        if($pass != $db_pass) {
+        if(!password_verify($pass,$hashed_password)) {
            echo "<script>
                 window.alert('비밀번호가 틀립니다!')
-                location.href = 'login.php'
+             location.href = 'selecttype.php?type=login_form';
               </script>";
            exit;
         }
@@ -34,7 +34,7 @@
             $_SESSION["userlevel"] = $row["level"];
 
             echo "<script>
-                location.href = '../index.php';
+                location.href = '../main/index.php';
               </script>";
         }
      }        

@@ -1,3 +1,3 @@
 <?php 
-    $con = mysqli_connect("localhost", "hosung", "dabu486!", "hosung");
-?>
+      $con = mysqli_connect("localhost", "user", "12345", "sample");
+      ?>

@@ -24,8 +24,7 @@
       $num_record = mysqli_num_rows($result);
 
       if ($num_record) {
-         echo $id." 아이디는 중복됩니다.<br>";
-         echo "다른 아이디를 사용해 주세요!<br>";
+         echo "이미 사용하고 있는 아이디입니다.<br>다른 아이디를 사용해 주세요!";
       }
       else {
          echo $id." 아이디는 사용 가능합니다.<br>";
