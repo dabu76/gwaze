@@ -35,7 +35,7 @@
         echo "<li>홈페이지에 오신 것을 환영합니다~~~ </li>";
     }
     else {
-        $logged = $username."(Level:".$userlevel.")님 환영합니다. ";
+        $logged = $username."님 환영합니다. ";
         echo "<li>$logged</li>";
     }
 ?>
@@ -55,5 +55,8 @@
 <?php
     }
 ?>
-
+    <li><a href="../board/selectboard.php?type=_youtube">자유게시판</a><li>
+    <li><a href="../board/selectboard.php?type=_notice">공지게시판</a><li>
+    <li><a href="../board/selectboard.php?type=_qna">qna게시판</a><li>
+        
 </header>
