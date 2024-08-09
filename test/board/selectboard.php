@@ -61,7 +61,10 @@ $link = "index.php?type=".$type."&page=".$page;
 
         <li>
             <span class="col1"><?= $num ?></span>
-            <span class="col2"><?= $subject ?></span>
+            <?php 
+				$view= "view.php?type=$type&num=$num"; 
+			?>
+            <span class="col2"><a href = "<?=$view?>"><?= $subject ?></span></a>
             <span class="col3"><?= $name ?></span>
             <span class="col4"><?= $file_image ?></span>
             <span class="col5"><?= $regist_day ?></span>
@@ -94,6 +97,12 @@ $link = "index.php?type=".$type."&page=".$page;
     }	
 ?>
 </ul> 
+<ul class="buttons">
+
+    <li><a href = "insert.php?type=$type">글쓰기</a></li>
+   
+
+</ul>		
 
 </ul>
 </body>
