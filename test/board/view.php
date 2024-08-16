@@ -122,3 +122,18 @@ function check() {
 <?php
 	} 
 ?>
+<ul class="buttons">
+		<?php
+			$list_url = "selectboard.php?&type=$type";
+			$modify_url = "modifyform.php?type=$type&num=$num";
+			$delete_url = "deleteboard.php?type=$type&num=$num";
+		?>
+	<li><button onclick="location.href='<?=$list_url?>'">목록보기</button></li>
+<?php
+	if ($userlevel==1 or $userid==$id) {
+?>
+	<li><button onclick="location.href='<?=$modify_url?>'">수정하기</button></li>   
+	<li><button onclick="location.href='<?=$delete_url?>'">삭제하기</button></li>
+<?php
+}
+?>

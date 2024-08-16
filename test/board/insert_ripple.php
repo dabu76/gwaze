@@ -8,7 +8,6 @@ if (!$userid) {
             alert('로그인 후 이용해 주세요!');
             location.href='../login/selecttype.php?type=login_form'
             </script>";
-    exit;
 }
  $type = $_GET["type"];
  $num = $_GET["num"];
