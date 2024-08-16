@@ -6,20 +6,21 @@ $scale = 10;
 $page = isset($_GET["page"]) ? intval($_GET["page"]) : 1;
 $type = isset($_GET["type"]) ? $_GET["type"] : '';
 
-$sql = "SELECT * FROM `$type`";
+$sql = "SELECT * FROM `$type` order by num desc";
+
 $result = mysqli_query($con, $sql);
 
 $rows = [];
 while ($row = mysqli_fetch_assoc($result)) {
     $rows[] = $row;
 }
-
 $totalrecord = count($rows);
 
 $totalpage = ($totalrecord % $scale == 0) ? ceil($totalrecord / $scale) : ceil($totalrecord / $scale) + 1;
 
 $start = ($page - 1) * $scale;
-$link = "index.php?type=".$type."&page=".$page;
+$inserturl ="insertform.php?type=$type";
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -59,12 +60,23 @@ $link = "index.php?type=".$type."&page=".$page;
         $file_image = $file_name ? "<img src='../img/file.png'>" : " ";
         ?>
 
+
         <li>
             <span class="col1"><?= $num ?></span>
             <?php 
 				$view= "view.php?type=$type&num=$num"; 
-			?>
-            <span class="col2"><a href = "<?=$view?>"><?= $subject ?></span></a>
+                $count = '';
+                $ripple = $type."_ripple";
+                $sql = "select * from $ripple where parent=$num";
+                $result2 = mysqli_query($con, $sql);
+                $num_ripple = mysqli_num_rows($result2);
+
+                  if ($num_ripple)
+                   $count = " [$num_ripple]";
+ ?>
+
+            <span class="col2"><a href = "<?=$view?>"><?= $subject ?><?=$count?></span></a>
+        
             <span class="col3"><?= $name ?></span>
             <span class="col4"><?= $file_image ?></span>
             <span class="col5"><?= $regist_day ?></span>
@@ -77,7 +89,7 @@ $link = "index.php?type=".$type."&page=".$page;
 <?php
 	if ($totalpage>=2 && $page >= 2) {
 		$newpage = $page-1;
-		echo "<li><a href='index.php?type=$type&page=$newpage'>◀ </a> </li>";
+		echo "<li><a href='selectboard.php?type=$type&page=$newpage'>◀ </a> </li>";
 	}		
 	else {
 		echo "<li>&nbsp;</li>";
@@ -86,20 +98,21 @@ $link = "index.php?type=".$type."&page=".$page;
 		if ($page == $i)    
 			echo "<li><b> $i </b></li>";
 		else
-			echo "<li> <a href='index.php?type=$type&page=$i'> $i </a> <li>";
+			echo "<li> <a href='selectboard.php?type=$type&page=$i'> $i </a> <li>";
    	}
 		if ($totalpage>=2 && $page != $totalpage)	{
 		$newpage = $page+1;	
-		echo "<li> <a href='index.php?type=$type&page=$newpage'> ▶</a> </li>";
+		echo "<li> <a href='selectboard.php?type=$type&page=$newpage'> ▶</a> </li>";
 	}
 	else{
 		echo "<li>&nbsp;</li>";	
     }	
 ?>
+
 </ul> 
 <ul class="buttons">
-
-    <li><a href = "insert.php?type=$type">글쓰기</a></li>
+    
+    <li><a href = <?=$inserturl?>>글쓰기</a></li>
    
 
 </ul>		
