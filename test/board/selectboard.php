@@ -24,10 +24,12 @@ $inserturl ="insertform.php?type=$type";
 ?>
 <!DOCTYPE html>
 <html>
+    
 <head>
     <meta charset="utf-8">
     <title>게시판</title>
 </head>
+
 <body>
 <ul class="board_list">
     <?php
@@ -41,6 +43,7 @@ $inserturl ="insertform.php?type=$type";
 
     ?>
     <li>
+        
         <span class="col1">번호</span>
         <span class="col2">제목</span>
         <span class="col3">글쓴이</span>
@@ -66,15 +69,18 @@ $inserturl ="insertform.php?type=$type";
             <?php 
 				$view= "view.php?type=$type&num=$num"; 
                 $count = '';
+                if($type == "_qna"|| $type == "_youtube"){
                 $ripple = $type."_ripple";
-                $sql = "select * from $ripple where parent=$num";
-                $result2 = mysqli_query($con, $sql);
+                $sql2 = "select * from $ripple where parent=$num";
+                $result2 = mysqli_query($con, $sql2);
                 $num_ripple = mysqli_num_rows($result2);
-
-                  if ($num_ripple)
+        
+                  if ($num_ripple){
                    $count = " [$num_ripple]";
- ?>
+                }
+            }
 
+ ?>
             <span class="col2"><a href = "<?=$view?>"><?= $subject ?><?=$count?></span></a>
         
             <span class="col3"><?= $name ?></span>
@@ -110,7 +116,8 @@ $inserturl ="insertform.php?type=$type";
 ?>
 
 </ul> 
-<ul class="buttons">
+<ul class="buttons">    
+
     
     <li><a href = <?=$inserturl?>>글쓰기</a></li>
    

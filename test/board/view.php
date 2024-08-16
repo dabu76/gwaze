@@ -71,7 +71,7 @@ function check() {
 	</li>
 </ul>
 <?php
-	if ($type=="_qna") {
+	if ($type=="_qna" || $type =="_youtube") {
         $ripple = $type."_ripple";
 
 	    $sql = "select * from $ripple where parent='$num' order by num";
