@@ -68,7 +68,7 @@
             </ul>   
             
             <ul class="buttons" >
-	        <li><input type="submit" value="저장하기" style="width:80px" disabled></li>
+	        <li><input type="submit" value="저장하기" style="width:80px" ></li>
             <li><button type="button" onclick="if (confirm('리셋하시겠습니까?')) { document.member.reset(); document.member.id.focus(); }">취소하기</button></li>
 
         </ul>

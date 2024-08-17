@@ -4,14 +4,13 @@
     $type = $_GET["type"];
   
 
-    $subject = $_POST["subject"];		// 제목
-    $content = $_POST["content"];		// 내용
-	$is_html = $_POST['is_html'];		// HTML 쓰기
-
-	$subject = htmlspecialchars($subject, ENT_QUOTES);	// 제목 HTML 특수문자 변환
-	$content = htmlspecialchars($content, ENT_QUOTES);	// 내용 HTML 특수문자 변환 
-	$regist_day = date("Y-m-d (H:i)");  // UTC 기준 현재의 '년-월-일 (시:분)'
-
+    $subject = $_POST["subject"];
+    $content = $_POST["content"];
+	$is_html = isset($_POST["is_html"]) ? $_POST["is_html"] : ''; 
+	$subject = htmlspecialchars($subject, ENT_QUOTES);
+	$content = htmlspecialchars($content, ENT_QUOTES);	 
+	$regist_day = date("Y-m-d (H:i)");  
+	$report ="report";
 	$upload_dir = './data/';
 
 	$upfile_name	 = $_FILES["upfile"]["name"];
@@ -60,7 +59,7 @@
 
 	$sql = "insert into $type (id, name, subject, content, is_html, regist_day, ";
 	$sql .= "file_name, file_type, file_copied) ";
-	$sql .= "values('$userid', '$username', '$subject', '$content', '$is_html', '$regist_day', ";
+	$sql .= "values('$userid', '$username', '$subject', '$content', '$is_html', '$regist_day',";
 	$sql .= "'$upfile_name', '$upfile_type', '$copied_file_name')";
 
 	mysqli_query($con, $sql); 
