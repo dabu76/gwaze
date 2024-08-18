@@ -33,9 +33,17 @@
             $_SESSION["username"] = $row["name"];
             $_SESSION["userlevel"] = $row["level"];
 
-            echo "<script>
-                location.href = '../main/index.php';
-              </script>";
+          
+        }
+        if($row["level"] == 9){
+         echo "<script>
+         location.href = '../main/index.php';
+       </script>";
+        }else{
+         echo "<script>
+         location.href = '../admin/index.php';
+       </script>";
         }
      }        
 ?>
+ 

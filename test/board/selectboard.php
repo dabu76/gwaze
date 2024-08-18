@@ -117,12 +117,22 @@ $inserturl ="insertform.php?type=$type";
 
 </ul> 
 <ul class="buttons">    
-
+<?php
+	        if ( $userlevel==1 || $type=="_youtube" || $type=="_qna"  ) {
+           
+        ?>
     
     <li><a href = <?=$inserturl?>>글쓰기</a></li>
    
-
+    <?php
+	        } elseif($userlevel ==1){
+     ?>
+    <li><a href = <?=$inserturl?>>글쓰기</a></li>
+    <?php
+            }
+    ?>
 </ul>		
+
 
 </ul>
 </body>

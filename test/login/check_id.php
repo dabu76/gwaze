@@ -2,8 +2,7 @@
 <head>
 <meta charset="utf-8">
 <style>
-.close { margin:20px 0 0 120px; cursor:pointer; } /*class인 close에 스타일을 줘서
-닫기버튼을 누르면 꺼질수 있게 만듬*/
+.close { margin:20px 0 0 120px; cursor:pointer; }
 </style>
 </head>
 <body>

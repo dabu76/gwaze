@@ -75,7 +75,6 @@
 		<ul class="buttons">
 	        <li><input type="submit" value="저장" style="width:80px"></li>
             <li><button type="button" onclick="if (confirm('취소하시겠습니까?')) { document.member.id.value = ''; document.member.pass.value = ''; document.member.pass_confirm.value = ''; document.member.name.value = ''; document.member.email.value = ''; document.member.id.focus(); }">취소하기</button></li>
-                <!--위에서 이미 벨류값을 주므로 따로 따로 하나씩다 공백을 줘야함-->    
         </ul>
     </div>   
 </form>
