@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>끝말잇기</title>
+        <title>쿵쿵따</title>
     </head>
     <body>
         <div><span id="order">1</span>번째 참가자</div>
@@ -22,8 +22,11 @@
             const onInput= (event)=>{ //텍스트 안에 글을 입력하면
                 newWord = event.target.value; // 입력한 단어를 현재단어로 저장하고
             };
-            const onClickButton =()=>{ //버튼을 누르면
-                if(!word || word.at(-1) === newWord[0]){ //만약 word(제시어)가 공백이거나 전에 입력한 단어와 현재의 단어가 일치한다면
+            const onClickButton =()=>{//버튼을 누르면
+                const count = newWord.length; //받은 값의 글자의 갯수를 세서
+                
+                if(count === 3){ //만약 글자가 3이라면 아래의 if문을 실행
+                if(!word || word.at(-1) === newWord[0]  ){ //만약 word(제시어)가 공백이거나 전에 입력한 단어와 현재의 단어가 일치한다면
                     word = newWord; // 제시어는 현재단어가 되고
                     $word.textContent = word; //위의 word의 span 에 제시어가 출력되게하고
                     const order = Number($order.textContent); // order라는변수를 id에 저장되는 값으로 설정하고 
@@ -34,13 +37,17 @@
                     }
                     
                 }else{ //틀렸다면
+                 
                     alert ('틀린단어입니다!'); //알람띄움
-                  
+                
                    }
-                   $input.value = '';//그리고 텍스트값을 공백을 주고 
-                   $input.focus(); //텍스트로 포커스
-                };
-            
+                  
+                } else{ //3글자가 아니라면 알람을 띄움
+                        alert('3글자가 아닙니다');
+                    };
+                    $input.value = '';//그리고 텍스트값을 공백을 주고 
+                    $input.focus(); //텍스트로 포커스
+            }
             $input.addEventListener('input',onInput);
             $button.addEventListener('click',onClickButton);
             </script>
