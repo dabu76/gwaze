@@ -54,7 +54,6 @@
     <li><a href="../board/selectboard.php?type=_youtube">자유게시판</a><li>
     <li><a href="../board/selectboard.php?type=_notice">공지게시판</a><li>
     <li><a href="../board/selectboard.php?type=_qna">qna게시판</a><li>
-    <li><a href="../admin/userlist.php">유저관리</a><li>
     <li><a href="../admin/reportlist.php">신고받은게시글</a><li>
 
 <?php

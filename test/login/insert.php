@@ -13,7 +13,7 @@
 	if ($num_record) {
 		echo "<script>
 				alert('이미 사용하고 있는 아이디입니다');
-                location.href = 'form.php';
+                location.href = 'selecttype.php?type=form';
 				</script>
 		";
 		exit;
@@ -23,7 +23,8 @@
 	$sql .= "values('$id', '$hashed_password', '$name', '$email', '$regist_day', 9, 100)";
 	mysqli_query($con, $sql);       
 
-    mysqli_close($con);     
+    mysqli_close($con);   
+      
     echo "<script>
 	          location.href = 'selecttype.php?type=login_form';
 	      </script>";
