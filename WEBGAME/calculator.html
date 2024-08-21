@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>계산기</title>
+    <style>
+        *{ box-sizing: border-box}
+        #result{width :180px; height:50px; margin:5px; text-align: right;}
+        #operator{width: 50px;height: 50px;margin:5px; text-align: center;}
+        button{width: 50px;height: 50px; margin: 5px;}
+    </style>
+</head>
+<!--계산기 버튼 구현-->
+<body>
+    <input readonly id="operator">
+    <input readonly type="number" id="result">
+        <div class ="row">
+            <button id="num-7">7</button>
+            <button id="num-8">8</button>
+            <button id="num-9">9</button>
+            <button id="plus">+</button>
+        </div>
+        <div class ="row">
+            <button id="num-4">4</button>
+            <button id="num-5">5</button>
+            <button id="num-6">6</button>
+            <button id="minus">-</button>
+        </div>
+        <div class ="row">
+            <button id="num-1">1</button>
+            <button id="num-2">2</button>
+            <button id="num-3">3</button>
+            <button id="devide">/</button>
+        </div>
+        <div class ="row">
+            <button id="clear">1</button>
+            <button id="num-0">2</button>
+            <button id="calculate">=</button>
+            <button id="multiply">x</button>
+        </div>
+<script>
+    let numOne = '';
+    let operator='';
+    let numTwo = '';
+    const $operator = document.querySelector('#operator');
+    const $result = document.querySelector('#result');
+    const onClickNumber = (event) => { // onClickNumber라는 함수를 정의하고, 매개변수에 이벤트 (클릭했을때의 변화)를 받아서
+    
+        if (!operator) {// operator가 없으면
+            numOne += event.target.textContent; // 이벤트를 받은 타겟에 이벤트 값을줌
+            $result.value += event.target.textContent; // 화면에 출력되는 결과에 이벤트 값을 추가
+            return; //그 값을 반환
+        }
+            if(!numTwo){ //넘투가 없으면
+                result.value=''; //리절트의 값을 공백으로 만들고
+            }
+            numTwo += event.target.textContent; // 이벤트를 받은 타겟에 이벤트 값을줌
+            $result.value += event.target.textContent; // 화면에 출력되는 결과에 이벤트 값을 추가
+        };
+          //이렇게 줄수있는 이유는 클로저라는개념으로 인해서 인데 클로저라는것은 함수가 선언될때 환경(스코프 = 범위) 를 기억해서 
+         //그함수가 나중에 실행될때에도 함수가 정의된 당시의 변수를 가져와 참조할수있기때문에
+
+   
+        document.querySelector('#num-0').addEventListener('click',onClickNumber);
+        document.querySelector('#num-1').addEventListener('click',onClickNumber);
+        document.querySelector('#num-2').addEventListener('click',onClickNumber);
+        document.querySelector('#num-3').addEventListener('click',onClickNumber);
+        document.querySelector('#num-4').addEventListener('click',onClickNumber);
+        document.querySelector('#num-5').addEventListener('click',onClickNumber);
+        document.querySelector('#num-6').addEventListener('click',onClickNumber);
+        document.querySelector('#num-7').addEventListener('click',onClickNumber);
+        document.querySelector('#num-8').addEventListener('click',onClickNumber);
+        document.querySelector('#num-9').addEventListener('click',onClickNumber);
+        const onClickOperator = (op) =>()=>{
+            if(numOne){
+                operator =op;
+                $operator.value = op;
+            }else{
+                alert('숫자를 먼저입력해주세요');
+            }
+        };
+
+        document.querySelector('#plus').addEventListener('click',onClickOperator('+'));
+        document.querySelector('#minus').addEventListener('click',onClickOperator('-'));
+        document.querySelector('#devide').addEventListener('click',onClickOperator('/'));
+        document.querySelector('#multiply').addEventListener('click',onClickOperator('*'));
+        document.querySelector('#calculate').addEventListener('click',() =>{});
+        document.querySelector('#clear').addEventListener('click', () => {});
+        
+</script>
+
+</body>
