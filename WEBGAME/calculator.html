@@ -32,8 +32,8 @@
             <button id="devide">/</button>
         </div>
         <div class ="row">
-            <button id="clear">1</button>
-            <button id="num-0">2</button>
+            <button id="clear">c</button>
+            <button id="num-0">0</button>
             <button id="calculate">=</button>
             <button id="multiply">x</button>
         </div>
@@ -70,22 +70,57 @@
         document.querySelector('#num-7').addEventListener('click',onClickNumber);
         document.querySelector('#num-8').addEventListener('click',onClickNumber);
         document.querySelector('#num-9').addEventListener('click',onClickNumber);
-        const onClickOperator = (op) =>()=>{
-            if(numOne){
-                operator =op;
-                $operator.value = op;
+        const calculate = () =>{ //계산식을 누르면
+            if(numTwo){ // 넘버투에 숫자가 있다면
+                switch(operator){ //오퍼레이터가 있을때
+                    case '+': //+라면 두개를 더하고 
+                        $result.value=parseInt(numOne)+parseInt(numTwo);
+                        break; //브레이크
+                    case '-': //-라면 빼기
+                        $result.value=numOne-numTwo;
+                        break;
+                    case '*': //* 곱하기
+                    $result.value=numOne*numTwo;
+                        break;
+                    case '/': // 라면 나누기
+                    $result.value=numOne/numTwo;
+                        break;
+                    default: // false라면 break 
+                        break;
+                }
+                $operator.value=''; //하고나면 operator를 공백으로 만들고
+                numOne =$result.value; // 리절트에 나온결과를 numone로 옮긴다
+                operator =''; // 오퍼레이터와 넘투의 값을 공백으로만든다
+                numTwo='';
             }else{
-                alert('숫자를 먼저입력해주세요');
+                alert('숫자입력');
             }
         };
-
+        const onClickOperator =(op)=>()=>{ // 오퍼레이터를 누르면 op에 값을 주고 공백함수에 저장  
+            if(numTwo){//만약 넘투에 값이 있다면
+                calculate(); //위의 캘큘레이터를 실행
+                operator=op; //(오퍼레이터는 위의 op값을주고)
+                $operator.value=op; // 변수에도 저장
+            }else if(numOne){// 넘원이 있다면 (넘투가 없다는뜻) 
+                operator=op; //오퍼레이터값을받고
+                $operator.value=op; //변수에도 저장
+            }else{
+                alert('숫자입력'); //아무것도 없다면 숫자를 입력하라고 알람이뜸
+            }
+        }
         document.querySelector('#plus').addEventListener('click',onClickOperator('+'));
         document.querySelector('#minus').addEventListener('click',onClickOperator('-'));
         document.querySelector('#devide').addEventListener('click',onClickOperator('/'));
         document.querySelector('#multiply').addEventListener('click',onClickOperator('*'));
-        document.querySelector('#calculate').addEventListener('click',() =>{});
-        document.querySelector('#clear').addEventListener('click', () => {});
-        
+        document.querySelector('#calculate').addEventListener('click',calculate);
+        document.querySelector('#clear').addEventListener('click', () => {
+            $operator.value ='';
+            operator.value ='';
+            numTwo ='';
+            numone ='';
+            $result.value = '';
+        });
+   
 </script>
 
 </body>
